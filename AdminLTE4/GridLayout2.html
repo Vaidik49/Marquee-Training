@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdminLTE v4 | Dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sidebar-bg: #1a1d21;
+    --sidebar-width: 250px;
+    --navbar-height: 57px;
+    --body-bg: #17191c;
+    --content-bg: #212529;
+    --card-bg: #2c3034;
+    --border-color: #373b3e;
+    --text-primary: #dee2e6;
+    --text-muted: #8a909d;
+    --text-white: #fff;
+    --accent-blue: #3b7ddd;
+    --accent-green: #28a745;
+    --accent-yellow: #ffc107;
+    --accent-red: #dc3545;
+    --sidebar-item-hover: #2c3034;
+    --sidebar-item-active: #3b4148;
+    --font: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--body-bg);
+    color: var(--text-primary);
+    display: flex;
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #3b4148 transparent;
+  }
+
+  .sidebar-brand {
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: #1a1d21;
+    border-bottom: 1px solid #373b3e;
+    text-decoration: none;
+    gap: 10px;
+  }
+
+  .sidebar-brand .brand-logo {
+    width: 32px;
+    height: 32px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .sidebar-brand .brand-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-white);
+    letter-spacing: 0.3px;
+  }
+
+  .sidebar-nav {
+    padding: 8px 0;
+    flex: 1;
+  }
+
+  .nav-item {
+    list-style: none;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 9px 16px;
+    color: #9aa0ac;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    gap: 8px;
+    transition: background 0.15s, color 0.15s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    background: var(--sidebar-item-hover);
+    color: var(--text-white);
+  }
+
+  .nav-link.active {
+    background: var(--sidebar-item-active);
+    color: var(--text-white);
+  }
+
+  .nav-link .nav-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-style: normal;
+    font-size: 14px;
+  }
+
+  .nav-link .nav-arrow {
+    margin-left: auto;
+    font-size: 11px;
+    transition: transform 0.2s;
+  }
+
+  .nav-link.open .nav-arrow {
+    transform: rotate(180deg);
+  }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--accent-blue);
+    color: #fff;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .submenu {
+    background: #141619;
+    padding: 2px 0;
+  }
+
+  .submenu .nav-link {
+    padding-left: 38px;
+    font-size: 13.5px;
+    color: #8a909d;
+  }
+
+  .submenu .nav-link:hover,
+  .submenu .nav-link.active {
+    color: #fff;
+    background: #1e2226;
+  }
+
+  .submenu .nav-icon {
+    font-size: 9px;
+  }
+
+  .nav-section-label {
+    padding: 14px 16px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #5c636a;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* MAIN WRAPPER */
+  .main-wrapper {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* NAVBAR */
+  .navbar {
+    height: var(--navbar-height);
+    background: #23272b;
+    border-bottom: 1px solid #373b3e;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
+  .navbar-toggler {
+    background: none;
+    border: none;
+    color: #9aa0ac;
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 18px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .navbar-toggler span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #9aa0ac;
+    border-radius: 2px;
+  }
+
+  .navbar-search {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-right: auto;
+    margin-left: 8px;
+  }
+
+  .navbar-search input {
+    background: #2c3034;
+    border: 1px solid #444;
+    border-right: none;
+    color: var(--text-primary);
+    padding: 5px 12px;
+    border-radius: 4px 0 0 4px;
+    font-size: 13px;
+    outline: none;
+    width: 200px;
+  }
+
+  .navbar-search input::placeholder { color: #666; }
+
+  .navbar-search button {
+    background: var(--accent-blue);
+    border: 1px solid var(--accent-blue);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+  }
+
+  .navbar-nav-item {
+    position: relative;
+  }
+
+  .navbar-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    color: #9aa0ac;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 15px;
+    gap: 4px;
+    transition: color 0.15s;
+  }
+
+  .navbar-nav-link:hover { color: #fff; }
+
+  .nav-badge-pill {
+    background: var(--accent-blue);
+    color: #fff;
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .nav-badge-pill.green { background: var(--accent-green); }
+  .nav-badge-pill.yellow { background: var(--accent-yellow); color: #222; }
+
+  .user-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px;
+    color: #9aa0ac;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .user-menu:hover { color: #fff; }
+
+  .user-menu img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-menu span {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* CONTENT */
+  .content-wrapper {
+    flex: 1;
+    padding: 20px;
+    background: var(--body-bg);
+  }
+
+  /* BREADCRUMB */
+  .content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .content-header h1 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-white);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    list-style: none;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .breadcrumb li + li::before {
+    content: '/';
+    margin-right: 6px;
+    color: #555;
+  }
+
+  .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+  .breadcrumb a:hover { color: #fff; }
+  .breadcrumb .active { color: var(--text-primary); }
+
+  /* STAT CARDS */
+  .stat-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, 150px);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    border-radius: 6px;
+    padding: 18px 20px 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    min-height: 110px;
+  }
+
+  .stat-card.blue { background: #3b7ddd; }
+  .stat-card.green { background: #28a745; }
+  .stat-card.yellow { background: #ffc107; }
+  .stat-card.red { background: #dc3545; }
+
+  .stat-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .stat-card-value {
+    font-size: 34px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.95);
+    line-height: 1.1;
+  }
+
+  .stat-card.yellow .stat-card-value { color: rgba(0,0,0,0.75); }
+  .stat-card.yellow .stat-card-label { color: rgba(0,0,0,0.65); }
+  .stat-card.yellow .stat-card-footer { background: rgba(0,0,0,0.15); color: rgba(0,0,0,0.7); }
+  .stat-card.yellow .stat-card-footer:hover { background: rgba(0,0,0,0.2); }
+
+  .stat-card-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 0;
+  }
+
+  .stat-card-icon {
+    font-size: 50px;
+    color: rgba(255,255,255,0.2);
+    line-height: 1;
+    margin-top: -6px;
+  }
+
+  .stat-card-footer {
+    background: rgba(0,0,0,0.15);
+    margin: 8px -20px 0;
+    padding: 6px 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .stat-card-footer:hover { background: rgba(0,0,0,0.2); }
+
+  /* MAIN GRID */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--card-bg);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+
+  .card-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card-bg);
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-white);
+  }
+
+  .card-tools {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .card-tool-btn {
+    background: none;
+    border: none;
+    color: #8a909d;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .card-tool-btn:hover { background: #373b3e; color: #fff; }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  
+  .chart-placeholder {
+    width: 100%;
+    height: 260px;
+    background: linear-gradient(180deg, #2c3034 0%, #252829 100%);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .chart-svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .chart-labels {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px 6px;
+    font-size: 11px;
+    color: #6c757d;
+  }
+
+  .chart-y-labels {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 6px;
+    font-size: 11px;
+    color: #6c757d;
+  }
+
+  .map-card {
+    background: #2979ff;
+    border-radius: 6px;
+    overflow: hidden;
+    border: none;
+  }
+
+  .map-card-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0,0,0,0.15);
+  }
+
+  .map-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .map-card-body {
+    padding: 0;
+  }
+
+  .map-placeholder {
+    width: 100%;
+    height: 220px;
+    background: #2979ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-svg {
+    width: 90%;
+    opacity: 0.85;
+  }
+
+  .map-mini-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: rgba(0,0,0,0.1);
+  }
+
+  .map-mini-stat {
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .map-mini-stat:last-child { border-right: none; }
+
+  .map-mini-chart {
+    width: 100%;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-mini-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+  }
+
+  /* DIRECT CHAT */
+  .chat-badge {
+    background: var(--accent-blue);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+
+  .chat-messages {
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scrollbar-width: thin;
+    scrollbar-color: #444 transparent;
+  }
+
+  .chat-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .chat-msg-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .chat-msg-meta .name { color: #cdd3da; font-weight: 600; }
+  .chat-msg-meta .time { color: #6c757d; }
+  .chat-msg-meta.right { flex-direction: row-reverse; }
+
+  .chat-msg-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .chat-msg-body.right { flex-direction: row-reverse; }
+
+  .chat-msg-body img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid #444;
+  }
+
+  .chat-bubble {
+    background: #3b4148;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text-primary);
+    max-width: calc(100% - 56px);
+    line-height: 1.5;
+  }
+
+  .chat-bubble.right {
+    background: var(--accent-blue);
+    color: #fff;
+  }
+
+  .chat-form {
+    padding: 10px 16px 12px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 8px;
+  }
+
+  .chat-form input {
+    flex: 1;
+    background: var(--body-bg);
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: var(--text-primary);
+    padding: 7px 12px;
+    font-size: 13px;
+    outline: none;
+  }
+
+  .chat-form input::placeholder { color: #555; }
+
+  .chat-form button {
+    background: var(--accent-blue);
+    border: none;
+    color: #fff;
+    padding: 7px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  .main-footer {
+    background: #23272b;
+    border-top: 1px solid var(--border-color);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .main-footer a { color: var(--accent-blue); text-decoration: none; }
+  .main-footer a:hover { text-decoration: underline; }
+
+  /* SVG ICONS via unicode/css */
+  .icon-dashboard::before { content: "⊞"; }
+  .icon-circle::before { content: "○"; font-size: 10px; }
+  .icon-paint::before { content: "🎨"; font-size: 12px; }
+  .icon-widgets::before { content: "□"; }
+  .icon-layout::before { content: "▤"; }
+  .icon-ui::before { content: "✦"; font-size: 11px; }
+  .icon-mail::before { content: "✉"; }
+  .icon-forms::before { content: "📋"; font-size: 12px; }
+  .icon-table::before { content: "▦"; }
+  .icon-pages::before { content: "📄"; font-size: 12px; }
+  .icon-arrow-down::before { content: "▾"; }
+  .icon-arrow-right::before { content: "›"; }
+  .icon-bars::before { content: "≡"; font-size: 20px; }
+  .icon-search::before { content: "🔍"; font-size: 12px; }
+  .icon-bell::before { content: "🔔"; font-size: 14px; }
+  .icon-comment::before { content: "💬"; font-size: 14px; }
+  .icon-sun::before { content: "☀"; }
+  .icon-user::before { content: "👤"; font-size: 14px; }
+  .icon-link::before { content: "🔗"; font-size: 11px; }
+  .icon-cart::before { content: "🛒"; }
+  .icon-chart::before { content: "📊"; }
+  .icon-user-plus::before { content: "👤+"; font-size: 22px; }
+  .icon-pie::before { content: "◕"; font-size: 28px; }
+  .icon-minus::before { content: "−"; }
+  .icon-times::before { content: "×"; }
+  .icon-compress::before { content: "⊡"; }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #3b4148; border-radius: 3px; }
+
+  /* Make sidebar scrollable without showing scrollbar visually */
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: #2c3034; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="#" class="sidebar-brand">
+    <div class="brand-logo">A</div>
+    <span class="brand-text">AdminLTE 4</span>
+  </a>
+
+  <nav class="sidebar-nav">
+    <ul style="list-style:none;">
+      <!-- Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link open" href="#">
+          <span class="nav-icon icon-dashboard"></span>
+          <span>Dashboard</span>
+          <span class="nav-arrow icon-arrow-down" style="margin-left:auto;"></span>
+        </a>
+        <ul class="submenu" style="list-style:none;">
+          <li><a class="nav-link active" href="#"><span class="nav-icon">○</span> Dashboard v1</a></li>
+          <li><a class="nav-link" href="#"><span class="nav-icon">○</span> Dashboard v2</a></li>
+          <li><a class="nav-link" href="#"><span class="nav-icon">○</span> Dashboard v3</a></li>
+        </ul>
+      </li>
+
+      <!-- Theme Generate -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon" style="font-size:13px;">🎨</span>
+          <span>Theme Generate</span>
+        </a>
+      </li>
+
+      <!-- Widgets -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon">☐</span>
+          <span>Widgets</span>
+          <span class="nav-arrow" style="margin-left:auto; font-size:13px;">›</span>
+        </a>
+      </li>
+
+      <!-- Layout Options -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon">▤</span>
+          <span>Layout Options</span>
+          <span class="nav-badge">7</span>
+          <span class="nav-arrow" style="font-size:13px;">›</span>
+        </a>
+      </li>
+
+      <!-- UI Elements -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon">✦</span>
+          <span>UI Elements</span>
+          <span class="nav-arrow" style="margin-left:auto; font-size:13px;">›</span>
+        </a>
+      </li>
+
+      <!-- Mailbox -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon">✉</span>
+          <span>Mailbox</span>
+          <span class="nav-arrow" style="margin-left:auto; font-size:13px;">›</span>
+        </a>
+      </li>
+
+      <!-- Forms -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon" style="font-size:12px;">📋</span>
+          <span>Forms</span>
+          <span class="nav-arrow" style="margin-left:auto; font-size:13px;">›</span>
+        </a>
+      </li>
+
+      <!-- Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon">▦</span>
+          <span>Tables</span>
+          <span class="nav-arrow" style="margin-left:auto; font-size:13px;">›</span>
+        </a>
+      </li>
+
+      <!-- PAGES section -->
+      <li><div class="nav-section-label">PAGES</div></li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon" style="font-size:12px;">📄</span>
+          <span>Pages</span>
+          <span class="nav-arrow" style="margin-left:auto; font-size:13px;">›</span>
+        </a>
+      </li>
+
+      <!-- EXAMPLES section -->
+      <li><div class="nav-section-label">EXAMPLES</div></li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span class="nav-icon">◻</span>
+          <span>Auth</span>
+          <span class="nav-arrow" style="margin-left:auto; font-size:13px;">›</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- MAIN WRAPPER -->
+<div class="main-wrapper">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <button class="navbar-toggler" type="button">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="navbar-search">
+      <input type="text" placeholder="Search...">
+      <button type="button"><span style="font-size:12px;">🔍</span></button>
+    </div>
+
+    <ul class="navbar-nav">
+      <!-- Messages -->
+      <li class="navbar-nav-item">
+        <a class="navbar-nav-link" href="#">
+          <span style="font-size:16px;">💬</span>
+          <span class="nav-badge-pill">3</span>
+        </a>
+      </li>
+      <!-- Notifications -->
+      <li class="navbar-nav-item">
+        <a class="navbar-nav-link" href="#">
+          <span style="font-size:16px;">🔔</span>
+          <span class="nav-badge-pill green">15</span>
+        </a>
+      </li>
+      <!-- Theme toggle -->
+      <li class="navbar-nav-item">
+        <a class="navbar-nav-link" href="#">
+          <span style="font-size:16px;">☀</span>
+        </a>
+      </li>
+      <!-- Fullscreen -->
+      <li class="navbar-nav-item">
+        <a class="navbar-nav-link" href="#">
+          <span style="font-size:16px;">⊡</span>
+        </a>
+      </li>
+      <!-- User -->
+      <li class="navbar-nav-item">
+        <div class="user-menu">
+          <img src="profile.jpg" alt="User">
+          <span>Vaidik Thummar</span>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="content-wrapper">
+
+    <!-- BREADCRUMB HEADER -->
+    <div class="content-header">
+      <h1>Dashboard</h1>
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">Dashboard</li>
+      </ol>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-cards">
+      <!-- New Orders -->
+      <div class="stat-card blue">
+        <div class="stat-card-top">
+          <div>
+            <div class="stat-card-value">150</div>
+            <div class="stat-card-label">New Orders</div>
+          </div>
+          <div class="stat-card-icon">🛒</div>
+        </div>
+        <a class="stat-card-footer" href="#">
+          More info <span style="font-size:13px;">🔗</span>
+        </a>
+      </div>
+
+      <!-- Bounce Rate -->
+      <div class="stat-card green">
+        <div class="stat-card-top">
+          <div>
+            <div class="stat-card-value">53%</div>
+            <div class="stat-card-label">Bounce Rate</div>
+          </div>
+          <div class="stat-card-icon">📊</div>
+        </div>
+        <a class="stat-card-footer" href="#">
+          More info <span style="font-size:13px;">🔗</span>
+        </a>
+      </div>
+
+      <!-- User Registrations -->
+      <div class="stat-card yellow">
+        <div class="stat-card-top">
+          <div>
+            <div class="stat-card-value" style="color:rgba(0,0,0,0.75);">44</div>
+            <div class="stat-card-label" style="color:rgba(0,0,0,0.65);">User Registrations</div>
+          </div>
+          <div class="stat-card-icon" style="color:rgba(0,0,0,0.15); font-size:42px;">👤</div>
+        </div>
+        <a class="stat-card-footer" href="#" style="color:rgba(0,0,0,0.7); background:rgba(0,0,0,0.15);">
+          More info <span style="font-size:13px;">🔗</span>
+        </a>
+      </div>
+
+      <!-- Unique Visitors -->
+      <div class="stat-card red">
+        <div class="stat-card-top">
+          <div>
+            <div class="stat-card-value">65</div>
+            <div class="stat-card-label">Unique Visitors</div>
+          </div>
+          <div class="stat-card-icon" style="font-size:42px;">◕</div>
+        </div>
+        <a class="stat-card-footer" href="#">
+          More info <span style="font-size:13px;">🔗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- MAIN GRID: Chart + Map -->
+    <div class="main-grid">
+      <!-- Sales Chart -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Sales Value</span>
+        </div>
+        <div class="card-body" style="padding: 0 0 0 0;">
+          <div class="chart-placeholder" style="height:290px; padding:10px 0 24px 32px; background:#2c3034;">
+            <div class="chart-y-labels">
+              <span>100</span><span>80</span><span>60</span><span>40</span><span>20</span><span>0</span>
+            </div>
+            <svg class="chart-svg" viewBox="0 0 580 260" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Grid lines -->
+              <line x1="0" y1="0" x2="580" y2="0" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="0" y1="52" x2="580" y2="52" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="0" y1="104" x2="580" y2="104" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="0" y1="156" x2="580" y2="156" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="0" y1="208" x2="580" y2="208" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+              <line x1="0" y1="260" x2="580" y2="260" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+              <!-- Green area (top line) -->
+              <defs>
+                <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#28a745" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="#28a745" stop-opacity="0.05"/>
+                </linearGradient>
+                <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3b7ddd" stop-opacity="0.6"/>
+                  <stop offset="100%" stop-color="#3b7ddd" stop-opacity="0.05"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Green filled area -->
+              <path d="M0,120 C40,110 80,80 120,70 C160,60 200,75 240,65 C280,55 320,45 360,55 C400,65 440,60 480,50 C510,43 545,35 580,30 L580,260 L0,260 Z"
+                    fill="url(#greenGrad)" stroke="none"/>
+              <!-- Green line -->
+              <path d="M0,120 C40,110 80,80 120,70 C160,60 200,75 240,65 C280,55 320,45 360,55 C400,65 440,60 480,50 C510,43 545,35 580,30"
+                    fill="none" stroke="#28a745" stroke-width="2.5" stroke-linejoin="round"/>
+
+              <!-- Blue filled area -->
+              <path d="M0,175 C30,170 60,165 100,160 C140,155 170,165 210,158 C250,150 280,145 320,150 C360,155 390,130 430,105 C460,85 510,60 580,30 L580,260 L0,260 Z"
+                    fill="url(#blueGrad)" stroke="none"/>
+              <!-- Blue line -->
+              <path d="M0,175 C30,170 60,165 100,160 C140,155 170,165 210,158 C250,150 280,145 320,150 C360,155 390,130 430,105 C460,85 510,60 580,30"
+                    fill="none" stroke="#4da3ff" stroke-width="2.5" stroke-linejoin="round"/>
+            </svg>
+            <div class="chart-labels">
+              <span>Jan '23</span><span>Feb '23</span><span>Mar '23</span><span>Apr '23</span><span>May '23</span><span>Jun '23</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Value Map -->
+      <div class="map-card">
+        <div class="map-card-header">
+          <span class="map-card-title">Sales Value</span>
+          <button class="card-tool-btn" style="color:rgba(255,255,255,0.7);">−</button>
+        </div>
+        <div class="map-card-body">
+          <!-- World map placeholder -->
+          <div class="map-placeholder">
+            <img src="map.png" alt="World Map">
+          </div>
+
+          <!-- Mini stats below map -->
+          <div class="map-mini-stats">
+            <div class="map-mini-stat">
+              <div class="map-mini-chart">
+                <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                  <defs>
+                    <linearGradient id="vg" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+                      <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,40 C10,35 20,25 30,28 C40,31 50,20 60,15 C70,10 75,8 80,5 L80,50 L0,50 Z" fill="url(#vg)"/>
+                  <path d="M0,40 C10,35 20,25 30,28 C40,31 50,20 60,15 C70,10 75,8 80,5" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="map-mini-label">Visitors</div>
+            </div>
+            <div class="map-mini-stat">
+              <div class="map-mini-chart">
+                <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                  <defs>
+                    <linearGradient id="og" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+                      <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,30 C10,35 20,20 30,25 C40,30 45,15 55,20 C65,25 70,10 80,15 L80,50 L0,50 Z" fill="url(#og)"/>
+                  <path d="M0,30 C10,35 20,20 30,25 C40,30 45,15 55,20 C65,25 70,10 80,15" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="map-mini-label">Online</div>
+            </div>
+            <div class="map-mini-stat">
+              <div class="map-mini-chart">
+                <svg viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                  <defs>
+                    <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+                      <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,45 C15,40 25,35 35,30 C45,25 50,32 60,22 C70,12 75,8 80,5 L80,50 L0,50 Z" fill="url(#sg)"/>
+                  <path d="M0,45 C15,40 25,35 35,30 C45,25 50,32 60,22 C70,12 75,8 80,5" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="map-mini-label">Sales</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+
+  </div>
+
+
+  <footer class="main-footer">
+    <div>
+      <strong>Copyright &copy; 2014-2026 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    </div>
+    <div>Anything you want</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
